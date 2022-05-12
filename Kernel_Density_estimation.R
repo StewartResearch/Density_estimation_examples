@@ -1,7 +1,7 @@
 #######################################3
 # Examples to walk students through Kernel Hensity Estimation in R
 ########################################
-# F. sTEwart
+# F. Stewart
 ########################################
 
 #######################3
