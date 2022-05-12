@@ -1,0 +1,12 @@
+{"type":["init_ps"],"time":["2022-04-11 19:34:00"],"user":["default_user"],"umph":[1649705640.1212],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2022-04-11 20:21:32"],"user":["default_user"],"umph":[1649708492.5726],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2022-04-11 20:24:13"],"user":["default_user"],"umph":[1649708653.5695],"ok":[false],"chunk":[1],"ex":[1],"e.ind":[1],"code":["dhat <- .PH_._\narea <- 47.7\nest.num.nests <- 49.69\nprint(est.num.nests)"],"message":["\nYou have not made a correct assignment to dhat."]}
+,
+{"type":["hint"],"time":["2022-04-11 20:24:13"],"user":["default_user"],"umph":[1649708653.5767],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[1]}
+,
+{"type":["check_chunk"],"time":["2022-04-11 20:29:21"],"user":["default_user"],"umph":[1649708961.1457],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[0],"code":["dhat <- 49.7\narea <- 47.7\nest.num.nests <- dhat * area\nprint(est.num.nests)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2022-04-12 23:05:23"],"user":["default_user"],"umph":[1649804723.3147],"ok":[true]}
+,
