@@ -1,0 +1,12 @@
+{"type":["init_ps"],"time":["2022-04-18 21:37:05"],"user":["default_user"],"umph":[1650317825.4377],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2022-04-18 21:45:40"],"user":["default_user"],"umph":[1650318340.0411],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2022-04-18 21:51:18"],"user":["default_user"],"umph":[1650318678.571],"ok":[false],"chunk":[1],"ex":[1],"e.ind":[1],"code":["scale.intercept.south <- -0.5102606\nscale.intercept.north <- -0.01081041\nest.sigma.south <- exp(scale.intercept.south)\nest.sigma.north <- exp(scale.intercept.north)\nprint(paste(\"South sigma=\", est.sigma.south, \"North sigma=\", est.sigma.north))"],"message":["\nYou have not made a correct assignment to scale.intercept.south."]}
+,
+{"type":["check_chunk"],"time":["2022-04-18 21:51:24"],"user":["default_user"],"umph":[1650318684.3417],"ok":[false],"chunk":[1],"ex":[1],"e.ind":[1],"code":["scale.intercept.south <- -0.5102606\nscale.intercept.north <- -0.01081041\nest.sigma.south <- exp(scale.intercept.south)\nest.sigma.north <- exp(scale.intercept.north)\nprint(paste(\"South sigma=\", est.sigma.south, \"North sigma=\", est.sigma.north))"],"message":["\nYou have not made a correct assignment to scale.intercept.south."]}
+,
+{"type":["hint"],"time":["2022-04-18 21:51:24"],"user":["default_user"],"umph":[1650318684.3509],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[1]}
+,
+{"type":["check_chunk"],"time":["2022-04-18 21:51:47"],"user":["default_user"],"umph":[1650318707.8381],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[0],"code":["scale.intercept.south <- -0.51\nscale.intercept.north <- -0.01\nest.sigma.south <- exp(scale.intercept.south)\nest.sigma.north <- exp(scale.intercept.north)\nprint(paste(\"South sigma=\", est.sigma.south, \"North sigma=\", est.sigma.north))"],"message":[""]}
+,

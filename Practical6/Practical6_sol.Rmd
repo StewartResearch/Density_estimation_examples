@@ -1,0 +1,197 @@
+#< ignore
+
+```{r start}
+setwd("C:/Users/erexs/Documents/GitHub/live-intro-6-design")
+library(RTutor)
+libs <- c("dssd", "sf")
+create.ps(sol.file="Practical6_sol.Rmd", ps.name="Practical6", libs = libs,
+          user.name = NULL, addons="quiz")
+show.ps("Practical6")
+```
+
+#>
+
+<img src=https://images.unsplash.com/photo-1526485796220-1c4ad338f85f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80 width=400 height=200 style="float:right">
+
+## Exercise 6 -- Survey design
+
+Output provided by the `dssd` package is extensive; the following is intended to help you find the most important aspects of that output so you can effectively assess the merits of the survey designs you produce. The following questions are intended to have you pick through the output and *think* about what some of those values are telling you.  The questions also ask you to do some "sense checking" to ensure the software is performing the way you expect (never trust software to do the right thing).
+
+#< preknit
+
+```{r  message=FALSE, warning=FALSE, echo=FALSE}
+library(dssd)
+shapefile.name <- system.file("extdata", "StAndrew.shp", package = "dssd")
+region <- make.region(region.name = "St Andrews Bay",
+                      units = "m",
+                      shape = shapefile.name)
+cover <- make.coverage(region, n.grid.points = 2000)
+design.space500 <- make.design(region = region,
+                      transect.type = "line",
+                      design = "systematic",
+                      spacing = 5000,
+                      design.angle = 90,
+                      edge.protocol = "minus",
+                      truncation = 2000,
+                      coverage.grid = cover)
+design.space500 <- run.coverage(design.space500, reps = 100, quiet=TRUE)
+print(design.space500)
+```
+
+#>
+
+#### Answer these questions by looking at the above output
+
+a) Use some common sense about the parallel aerial survey you have designed.  If the design specification is to place transects 5000m (5km) apart and further if truncation distance is 2000m (on either side of the aircraft), employ some simple geometry to assess whether `dssd` is doing the right thing.
+
+#< quiz "parallel1"
+question: What should be the percentage of the study area covered by survey effort? (to the nearest 5 percent)
+answer: 80
+roundto: 5
+#> 
+
+The design problem you were to solve treated the fuel capacity of the aircraft as the constraint around which you needed to operate.  Remember, the aircraft chosen could only travel 250km without refueling.  That constraint lead you to produce a survey in which the parallel transects were spaced at 5km.
+
+However, now take a broader view of the problem from a statistical rather than a logistical perspective.  Look in the output provided to determine the number of replicate transects resulting from spacing the transects 5km apart and orienting the transects east-to-west.
+
+#< quiz "parallel2"
+question: How many replicate transects result from this design
+answer: 8
+#> 
+
+#< quiz "parallel3"
+question: Is that sufficient replication (based upon what you learned from the variance discussion last Thursday)?
+sc:
+    - yes
+    - no*
+success: Correct, better to have 12-20
+failure: There are other design options available.
+#> 
+
+#< quiz "parallel4"
+question: What possible solutions (more than one answer) might there be to this lack of replication?
+mc:
+    - find another study area
+    - hire an aircraft with greater fuel capacity*
+    - use segmented transects*
+    - shorten the truncation distance
+success: There are probably other creative solutions.
+failure: A new study area is seldom possible
+#> 
+
+
+## Big picture comparing parallel and zigzag design
+
+b) Design-based inference rests upon the premise every location in the study area has the same chance of being sampled as every other location.  In other words, coverage scores is uniform.  We use the heat maps created by plotting design objects to visually assess this uniformity.
+
+#< preknit
+
+```{r echo=FALSE}
+design.zz.4500 <- make.design(region = region,
+                      transect.type = "line",
+                      design = "eszigzag",
+                      spacing = 4500,
+                      design.angle = 0,
+                      edge.protocol = "minus",
+                      bounding.shape = "convex.hull",
+                      truncation = 2000,
+                      coverage.grid = cover)
+design.zz.4500 <- run.coverage(design.zz.4500, reps = 100, quiet=TRUE)
+print(design.zz.4500)
+```
+
+#>
+
+
+#< quiz "big1"
+question: What numerical output might provide a more objective relative assessment of uniformity between designs?
+sc:
+    - mean line length
+    - sd (standard deviation) of trackline length
+    - median coverage score
+    - sd (standard deviation) of coverage score*
+success: Right; variability is measured by standard deviation.
+failure: What is the opposite of uniformity--variability.
+#>
+
+#< quiz "big2"
+question: Using the metric you chose in the previous question, which (parallel or zigzag) appears to have the more uniform coverage score?
+sc:
+    - parallel*
+    - zigzag
+
+success: Right; sd(Cov-parallel)=0.093, sd(cov-zigzag)=0.010
+failure: Which design has the larger variability?
+#>
+
+### Tentsmuir point transect survey design
+
+c) When designing the Tentsmuir survey, note that the design feature being specified is the number of transects.  This is in contrast to the St Andrews Bay survey, in which you specified the spacing of transects (to ensure returning to the airport).  With the Tentsmuir survey, specifying the number of point transects causes `dssd` to determine the number of point transects that can be systematically placed within the two strata of this study 
+
+#< preknit
+
+```{r echo=FALSE, message=FALSE}
+library(sf)
+shapefile.name <- system.file("extdata", "TentsmuirUnproj.shp", package = "dssd")
+sf.shape <- read_sf(shapefile.name)
+st_crs(sf.shape)
+proj4string <- "+proj=aea +lat_1=56 +lat_2=62 +lat_0=50 +lon_0=-3 +x_0=0 
+                +y_0=0 +ellps=intl +units=m"
+projected.shape <- st_transform(sf.shape, crs = proj4string)
+region.tm <- make.region(region.name = "Tentsmuir",
+                         strata.name = c("Main Area", "Morton Lochs"),
+                         shape = projected.shape)
+cover.tm <- make.coverage(region.tm, n.grid.points = 5000)
+design.tm <- make.design(region = region.tm,
+                         transect.type = "point",
+                         design = "systematic",
+                         samplers = c(25,15),
+                         design.angle = 0,
+                         edge.protocol = "minus",
+                         truncation = 100,
+                         coverage.grid = cover.tm)
+survey.tm <- generate.transects(design.tm)
+print(survey.tm)
+sims.tm <- run.coverage(design.tm, reps=100, quiet=TRUE)
+print(sims.tm)
+```
+
+#>
+
+#< quiz "tentsmuir1"
+question: What was the resulting spacing (m) for the main stratum for one realisation of the design? (nearest 10 meters)
+answer: 751
+roundto: 10
+#> 
+
+#< quiz "tentsmuir2"
+question: What proportion of the main stratum receives survey effort from the points with sampling radius of 100m? (nearest 5 percent)
+answer: 5
+roundto: 5
+#>
+
+#< quiz "tentsmuir3"
+question: What was the resulting spacing (m) for the Morton Lochs for one realisation of the design stratum? (nearest 10 meters)
+answer: 218
+roundto: 10
+#>
+
+#< quiz "tentsmuir4"
+question: What proportion of the Morton Lochs stratum receives survey effort from the points with sampling radius of 100m? (nearest 5 percent)
+answer: 61
+roundto: 5
+#>
+
+Note that even though the main stratum has 10 more point transects placed within it, the proportion of that stratum covered by sampling effort is much, much smaller than the coverage proportion for the smaller Morton Loch stratum.
+
+#< quiz "tentsmuir5"
+question: Using the standard deviation of coverage score, which stratum appears to have the more uniform coverage score?
+sc:
+    - main*
+    - Morton Lochs
+
+success: Right; sd(Cov-main)=0.026, sd(cov-Morton)=0.116
+failure: Check the standard deviation of the coverage scores for each stratum
+#>
+
+You might also note that the **range** of coverage scores is quite different between the strata: 0.0-0.15 for main, 0.19-0.73 for Morton Lochs.  The mean coverage score for Morton Lochs (0.58) is much closer to the maximum than to the minimum because a smaller number of coverage grid points (those near the edge of the stratum) suffer from low coverage scores.  This small stratum (71ha, 1/20th the size of the main stratum) has a high perimeter-to-area ratio, a situation in which edge effects are likely to arise.
