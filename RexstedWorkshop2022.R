@@ -72,3 +72,18 @@ summary(nest.unif)
 plot(nest.unif)
 gof_ds(nest.unif)
 # they are essentially the same model...
+
+
+##### Exercise 3 Practical ##########
+# See Practical3-Distance Sampling folder
+# got to Prac3_Assessing_LT_Detectionfunctions.html
+install.packages("Distance")
+library(Distance)
+data("LTExercise")
+head(LTExercise, n=3)
+summary(LTExercise$distance)
+min(LTExercise$distance)
+max(LTExercise$distance)
+LTExercise[100:102,]
+
+#Trucations
