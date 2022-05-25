@@ -87,3 +87,36 @@ max(LTExercise$distance)
 LTExercise[100:102,]
 
 #Trucations
+conversion.factor <- convert_units("meter", "kilometer", "square kilometer")
+# Fit half normal, no adjustments
+lt.hn <- ds(data=LTExercise, key="hn", adjustment=NULL,
+            convert_units=conversion.factor)
+summary(lt.hn)
+#AIC = 636
+
+plot(lt.hn, nc=30) # plot the detection function and specify many histogram bins
+
+# Truncate at 20metres
+lt.hn.t20m <- ds(data=LTExercise, key="hn", adjustment=NULL, truncation=20,
+                 convert_units=conversion.factor)
+#AIC = 599
+
+########################
+#Practical4
+
+# Import data
+data("Systematic_variance_2")
+conversion.factor <- convert_units("metre", "kilometre", "square kilometre")
+# Fit a simple model
+sysvar2.hn <- ds(data=Systematic_variance_2, key="hn", adjustment=NULL,
+                 convert_units=conversion.factor)
+# Summary
+sysvar2.hn$dht$individuals$D
+sysvar2.hn$dht$individuals$N
+
+# Bootstrap estimate of uncertainty
+# Run the bootstrap (this can take a while if nboot is large!) 
+est.boot <- bootdht(model=sysvar2.hn, flatfile=Systematic_variance_2,
+                    summary_fun=bootdht_Nhat_summarize,
+                    convert_units=conversion.factor, nboot=199)
+
