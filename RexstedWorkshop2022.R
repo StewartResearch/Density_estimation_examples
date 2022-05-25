@@ -124,5 +124,9 @@ summary(est.boot)
 
 ######################3
 # Jumping to practical 8
+# group size as a covariate of the detection function
 
-head(my.data)
+
+
+# rest of the practicals can be viewed through the html files in each folder
+# see the lectures associated with each practical at: http://distancelive.xyz/lectures.html 
