@@ -119,4 +119,10 @@ sysvar2.hn$dht$individuals$N
 est.boot <- bootdht(model=sysvar2.hn, flatfile=Systematic_variance_2,
                     summary_fun=bootdht_Nhat_summarize,
                     convert_units=conversion.factor, nboot=199)
+#summarize the bootstrap results
+summary(est.boot)
 
+######################3
+# Jumping to practical 8
+
+head(my.data)
