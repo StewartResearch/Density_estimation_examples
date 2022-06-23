@@ -1,5 +1,5 @@
 #######################################3
-# Examples to walk students through Kernel Hensity Estimation in R
+# Examples to walk students through Kernel Density Estimation in R
 ########################################
 # F. Stewart
 ########################################
@@ -42,7 +42,6 @@ plot(kde) # can alter this plot in the same was as above, so that we have a bett
 # no plot the parametric equivalent
 plot(kde)
 lines(kde, plot_start = TRUE, col = "red") # add the parametric estimation line
-?lines
 rug(mtcars$mpg) # add frequency on the X axis
 
 # what if we know this is not a normally distributed data set?
